@@ -47,6 +47,7 @@
                                 <option value="@item.Name">@item.Name</option>
                             }
                         </select>
+                        <ValidationMessage For="@(() => model.SelectService)" class="text-danger" />
                     </div>
 
                     <div class="form-group mb-2">
