@@ -1,0 +1,88 @@
+﻿@page "/"
+@layout MainLayout
+
+<div class="container">
+    <div class="row">
+        <div class="col-7">
+            <EditForm Model="@model" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <div class="w-80 mx-auto">
+                    <h3>Customer Contact Form</h3>
+                
+
+                    <div class="form-group mb-2">
+                        <label>Full Name *</label>
+                        <input class="form-control" @bind="model.FullName" />
+                        <ValidationMessage For="@(() => model.FullName)" class="text-danger" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Email *</label>
+                        <input class="form-control" @bind="model.Email" />
+                        <ValidationMessage For="@(() => model.Email)" class="text-danger" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Phone Number *</label>
+                        <input class="form-control" @bind="model.Phone" />
+                        <ValidationMessage For="@(() => model.Phone)" class="text-danger" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Address</label>
+                        <input class="form-control" @bind="model.Address" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Message *</label>
+                        <textarea class="form-control" @bind="model.Message"></textarea>
+                        <ValidationMessage For="@(() => model.Message)" class="text-danger" />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Select Service *</label>
+                        <select class="form-control" @bind="model.SelectService">
+                            @foreach (SelectServices item in ListSelectService.Values)
+                            {
+                                <option value="@item.Name">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <input type="checkbox" @bind="model.Check" /> I agree to the terms and conditions *
+                        <ValidationMessage For="@(() => model.Check)" class="text-danger" />
+                    </div>
+
+                    <div class="form-group mt-4 btn-sumarry">
+                        <button type="submit" class="btn w-100 btn-primary mt-10">Submit</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+
+        <div class="col-4">
+            <h3 class="mt-5">Submit</h3>
+            <div class="alert alert-success" style="display: @(isSubmitted ? "block" : "none")">
+                <p><strong>Full Name:</strong> @model.FullName</p>
+                <p><strong>Email:</strong> @model.Email</p>
+                <p><strong>Phone:</strong> @model.Phone</p>
+                <p><strong>Address:</strong> @model.Address</p>
+                <p><strong>Message:</strong> @model.Message</p>
+                <p><strong>Selected Service:</strong> @model.SelectService</p>
+                <p><strong>I agree to the terms and conditions:</strong> @model.Check</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CustomerViewModel model = new CustomerViewModel();
+    private bool isSubmitted = false;
+
+    void HandleSubmit()
+    {
+        isSubmitted = true;
+        Console.WriteLine("Data saved successfully!");
+    }
+}
