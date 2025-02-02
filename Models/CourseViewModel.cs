@@ -17,18 +17,19 @@ namespace Bai27.Models
         [StringLength(12, ErrorMessage = "Phone number must be 10-12 digits.", MinimumLength = 10)]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "Please select a service.")]
+        [Required(ErrorMessage = "Please select a course.")]
         public string SelectCourse { get; set; }
 
         [Required(ErrorMessage = "Please select start date.")]
-        public DateTime StartDate { get; set; }
+        [Range(typeof(DateTime), "1/1/2000", "12/31/2100", ErrorMessage = "Please select a valid start date.")]
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Column(TypeName = "ntext")]
-        [StringLength(90000000, ErrorMessage = "Massege must be at least 10 characters long.", MinimumLength = 10)]
         public string Message { get; set; }
 
+        public string CheckStudy { get; set; } = "";
         [Required(ErrorMessage = "You must agree before submitting.")]
-        public Boolean CheckStudy { get; set; } = false;
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree before submitting.")]
         public Boolean Check { get; set; } = false;
     }
 

@@ -1,4 +1,4 @@
-﻿@page "/CourseRegisterForm-validation"
+﻿@page "/courseRegisterForm"
 @layout MainLayout 
 
 <div class="container">
@@ -26,7 +26,7 @@
                         <ValidationMessage For="@(() => model.Phone)" class="text-danger" />
                     </div>
 
-                     <div class="form-group mb-2">
+                    <div class="form-group mb-2">
                         <label>Select Service *</label>
                         <select class="form-control" @bind="model.SelectCourse">
                             @foreach (SelectCourses item in ListSelectCourse.Values)
@@ -34,27 +34,34 @@
                                 <option value="@item.Name">@item.Name</option>
                             }
                         </select>
-                    </div>
-
-                    <div class="form-group my-3">
-                        <label>Stydy Mode *</label>
-                        <input class="form-check-input" id="Oneline" type="radio" value="Oneline" checked name="CheckStudy" @onclick="@(e => ChangePicker("Oneline"))" />
-                        <label for="Online">Online</label>
-                        <input class="form-check-input" id="OffLine" type="radio" value="OffLine" checked name="CheckStudy" @onclick="@(e => ChangePicker("OffLine"))"/>
-                        <label for="OffLine">OffLine</label>
+                        <ValidationMessage For="@(() => model.SelectCourse)" class="text-danger" />
                     </div>
 
                     <div class="form-group mb-2">
-                        <input type="datetime" @bind="model.StartDate" /> Preferred Start Date *
-                        <ValidationMessage For="@(() => model.StartDate)" class="text-danger" />
+                        <label>Stydy Mode *</label>
+                        <div class="mt-1">
+                            <input class="form-check-input" id="Oneline" type="radio" value="Oneline" checked name="CheckStudy" @onclick="@(e => ChangePicker("OneLine"))" />
+                            <label for="Online">Online</label>
+                            <input class="form-check-input" id="OffLine" type="radio" value="OffLine" checked name="CheckStudy" @onclick="@(e => ChangePicker("OffLine"))"/>
+                            <label for="OffLine">OffLine</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Preferred Start Date *</label>
+                        <input class="form-control" style="display:block" type="date" @bind="model.StartDate"/>
+                         <ValidationMessage For="@(() => model.StartDate)" class="text-danger" />
                     </div>
 
                     <div class="form-group mb-2">
                         <label>Comment or note *</label>
                         <textarea class="form-control" placeholder="Enter any additional infomation" @bind="model.Message"></textarea>
-                        <ValidationMessage For="@(() => model.Message)" class="text-danger" />
                     </div>
 
+                    <div class="form-group mb-2">
+                        <input type="checkbox" @bind="model.Check" /> I agree to the terms and conditions *
+                        <ValidationMessage For="@(() => model.Check)" class="text-danger" />
+                    </div>
 
                     <div class="form-group mt-4 btn-sumarry">
                         <button type="submit" class="btn w-100 btn-primary mt-10">Register</button>
@@ -70,7 +77,10 @@
                 <p><strong>Email:</strong> @model.Email</p>
                 <p><strong>Phone:</strong> @model.Phone</p>
                 <p><strong>Message:</strong> @model.Message</p>
-                <p><strong>Selected Service:</strong> @model.SelectCourse </p>
+                <p><strong>Selected Course:</strong> @model.SelectCourse</p>
+                <p><strong>Sudy mode:</strong> @model.CheckStudy</p>
+                <p><strong>Preferred Start Date:</strong> @model.StartDate.ToString("yyyy-MM-dd")</p>
+                <p><strong>Comment or note:</strong> @model.Message</p>
                 <p><strong>I agree to the terms and conditions:</strong> @model.Check</p>
             </div>
         </div>
@@ -80,6 +90,10 @@
 @code {
     private CourseViewModel model = new CourseViewModel();
     private bool isSubmitted = false;
+
+    void ChangePicker(string value){
+        model.CheckStudy = value;
+    }
 
     void HandleSubmit()
     {

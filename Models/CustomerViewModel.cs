@@ -23,8 +23,10 @@
 
         [Required(ErrorMessage = "Please select a service.")]
         public string SelectService { get; set; }
+
         [Required(ErrorMessage = "You must agree before submitting.")]
-        public Boolean Check { get; set; } = false;
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree before submitting.")]
+        public Boolean Check { get; set; }
     }
 
     public class SelectServices
